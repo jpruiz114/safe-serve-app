@@ -1,4 +1,4 @@
-# safe-serve
+# safe-serve-app
 
 ## how to install cordova?
 
