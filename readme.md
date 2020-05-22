@@ -11,3 +11,9 @@ cordova platform add browser
 
 cordova run browser
 ```
+
+When cloning the project you will need to solve all the node dependencies.
+
+```shell
+npm install
+```
