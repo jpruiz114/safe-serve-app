@@ -7,6 +7,14 @@ let StorageService = function () {
             this.initializeListOfReservations();
         },
 
+        sequenceId: 2,
+
+        getNextSequenceId: function () {
+            this.sequenceId = this.sequenceId + 1;
+
+            return this.sequenceId;
+        },
+
         getRandomDistance: function (maxDistance) {
             return Math.floor(Math.random() * Math.floor(maxDistance)) + Math.round(Math.random() * 10) / 10;
         },
@@ -149,18 +157,14 @@ let StorageService = function () {
         },
 
         addReservation: function (venueId, outsideDining, insideDining, guests) {
-            let id = this.listOfReservations.length + 1;
-            let placeInQueue = this.getNumberInRange(5, 20);
-            let estimatedWaitingTime = this.getNumberInRange(5, 30) + " minutes";
-
             let reservation = {
-                id: id,
+                id: this.getNextSequenceId(),
                 venue: venueId,
                 outsideDining: outsideDining,
                 insideDining: insideDining,
                 guests: guests,
-                placeInQueue: placeInQueue,
-                estimatedWaitingTime: estimatedWaitingTime
+                placeInQueue: this.getNumberInRange(5, 20),
+                estimatedWaitingTime: this.getNumberInRange(5, 30) + " minutes"
             }
 
             this.listOfReservations.push(reservation);
