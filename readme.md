@@ -1,5 +1,11 @@
 # safe-serve
 
+## how to install cordova?
+
+```shell
+sudo npm install -g cordova
+```
+
 ## commands to create app
 
 ```shell
