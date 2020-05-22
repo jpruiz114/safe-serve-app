@@ -126,10 +126,10 @@ let controller = {
 
                 $div.data("reservation-id", reservation.id);
 
-                $div.on("click", function () {
+                /*$div.on("click", function () {
                     let reservationId = $(this).data("reservation-id");
                     console.log("reservationId: " + reservationId);
-                });
+                });*/
 
                 let venue = controller.storageService.getVenueDetails(reservation.venue);
 
@@ -148,6 +148,26 @@ let controller = {
 
                 $div.find(".place-in-queue").text(reservation.placeInQueue);
                 $div.find(".estimated-wait-time").text(reservation.estimatedWaitingTime);
+
+                $div.find(".arrived-btn").data("reservation-id", reservation.id);
+
+                $div.find(".arrived-btn").on("click", function () {
+                    let reservationId = $(this).data("reservation-id");
+
+                    alert("Confirmation of arrival for reservation number " + reservationId);
+                });
+
+                $div.find(".remove-btn").data("reservation-id", reservation.id);
+
+                $div.find(".remove-btn").on("click", function () {
+                    let reservationId = $(this).data("reservation-id");
+
+                    $(".reservation").filter(function () {
+                        return $(this).data("reservation-id") === reservationId
+                    }).remove();
+
+                    controller.storageService.removeReservation(reservationId);
+                });
 
                 $tab.append($div);
             }

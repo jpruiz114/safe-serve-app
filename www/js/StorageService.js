@@ -144,6 +144,16 @@ let StorageService = function () {
 
         getListOfReservations: function () {
             return this.listOfReservations;
+        },
+
+        /**
+         * Removes a specific reservation by id doing a filter by the opposite predicate.
+         * @param reservationId
+         */
+        removeReservation: function (reservationId) {
+            this.listOfReservations = $.grep(this.listOfReservations, function (element) {
+                return element.id != reservationId;
+            });
         }
     };
 

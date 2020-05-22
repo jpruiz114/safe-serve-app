@@ -144,6 +144,12 @@ let StorageService = function () {
 
         getListOfReservations: function () {
             return this.listOfReservations;
+        },
+
+        removeReservation: function (reservationId) {
+            this.listOfReservations = $.grep(this.listOfReservations, function (element) {
+                return element.id != reservationId;
+            });
         }
     };
 
