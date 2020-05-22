@@ -14,8 +14,10 @@ cordova create safe-serve
 cd safe-serve/
 
 cordova platform add browser
+cordova platform add android
 
 cordova run browser
+cordova run android
 ```
 
 When cloning the project you will need to solve all the node dependencies.
