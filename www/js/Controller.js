@@ -99,6 +99,32 @@ let controller = {
 
             $venueTemplate.find(".inside-availability").text(venueDetails.insideDining.availability);
             $venueTemplate.find(".inside-estimated-waiting-time").text(venueDetails.insideDining.estimatedWaitingTime);
+
+            $venueTemplate.find(".join-outside-queue-btn").data("venue-id", venueDetails.id);
+            $venueTemplate.find(".join-outside-queue-btn").on("click", function () {
+                let venueId = $(this).data("venue-id");
+
+                let numberOfGuests = $(".outside-dining-guests").find(":selected").val();
+
+                controller.storageService.addReservation(venueId, true, false, numberOfGuests);
+
+                alert("Reservation confirmed");
+
+                controller.renderReservationsView();
+            });
+
+            $venueTemplate.find(".join-inside-queue-btn").data("venue-id", venueDetails.id);
+            $venueTemplate.find(".join-inside-queue-btn").on("click", function () {
+                let venueId = $(this).data("venue-id");
+
+                let numberOfGuests = $(".inside-dining-guests").find(":selected").val();
+
+                controller.storageService.addReservation(venueId, false, true, numberOfGuests);
+
+                alert("Reservation confirmed");
+
+                controller.renderReservationsView();
+            });
         });
     },
 
@@ -126,17 +152,14 @@ let controller = {
 
                 $div.data("reservation-id", reservation.id);
 
-                /*$div.on("click", function () {
-                    let reservationId = $(this).data("reservation-id");
-                    console.log("reservationId: " + reservationId);
-                });*/
-
                 let venue = controller.storageService.getVenueDetails(reservation.venue);
 
                 $div.find(".venue-name").text(venue.name);
                 $div.find(".venue-address").text(venue.address);
                 $div.find(".venue-city-state-zip").text(venue.city + ", " + venue.state + " " + venue.zip);
                 $div.find(".venue-distance").text(venue.distance);
+
+                // print if outside or inside dining + number of guests for party
 
                 if (reservation.outsideDining) {
                     $div.find(".option-title").text("Outside Dining");
@@ -146,9 +169,15 @@ let controller = {
                     $div.find(".option-title").text("Inside Dining");
                 }
 
+                $div.find(".option-title").append(" for " + reservation.guests + " guests");
+
+                // set the place in queue
                 $div.find(".place-in-queue").text(reservation.placeInQueue);
+
+                // set the estimated wait time
                 $div.find(".estimated-wait-time").text(reservation.estimatedWaitingTime);
 
+                // logic for arrival btn
                 $div.find(".arrived-btn").data("reservation-id", reservation.id);
 
                 $div.find(".arrived-btn").on("click", function () {
@@ -157,6 +186,7 @@ let controller = {
                     alert("Confirmation of arrival for reservation number " + reservationId);
                 });
 
+                // logic for remove reservation btn
                 $div.find(".remove-btn").data("reservation-id", reservation.id);
 
                 $div.find(".remove-btn").on("click", function () {
@@ -167,8 +197,11 @@ let controller = {
                     }).remove();
 
                     controller.storageService.removeReservation(reservationId);
+
+                    alert("Reservation removed");
                 });
 
+                // add the reservation
                 $tab.append($div);
             }
         });

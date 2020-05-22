@@ -128,6 +128,7 @@ let StorageService = function () {
                     venue: 1,
                     outsideDining: true,
                     insideDining: false,
+                    guests: "2",
                     placeInQueue: this.getNumberInRange(5, 20),
                     estimatedWaitingTime: this.getNumberInRange(5, 30) + " minutes"
                 },
@@ -136,6 +137,7 @@ let StorageService = function () {
                     venue: 4,
                     outsideDining: false,
                     insideDining: true,
+                    guests: "2",
                     placeInQueue: this.getNumberInRange(5, 20),
                     estimatedWaitingTime: this.getNumberInRange(5, 30) + " minutes"
                 },
@@ -146,6 +148,28 @@ let StorageService = function () {
             return this.listOfReservations;
         },
 
+        addReservation: function (venueId, outsideDining, insideDining, guests) {
+            let id = this.listOfReservations.length + 1;
+            let placeInQueue = this.getNumberInRange(5, 20);
+            let estimatedWaitingTime = this.getNumberInRange(5, 30) + " minutes";
+
+            let reservation = {
+                id: id,
+                venue: venueId,
+                outsideDining: outsideDining,
+                insideDining: insideDining,
+                guests: guests,
+                placeInQueue: placeInQueue,
+                estimatedWaitingTime: estimatedWaitingTime
+            }
+
+            this.listOfReservations.push(reservation);
+        },
+
+        /**
+         * Removes a specific reservation by id doing a filter by the opposite predicate.
+         * @param reservationId
+         */
         removeReservation: function (reservationId) {
             this.listOfReservations = $.grep(this.listOfReservations, function (element) {
                 return element.id != reservationId;
