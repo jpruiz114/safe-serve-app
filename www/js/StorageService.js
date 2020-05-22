@@ -4,41 +4,18 @@ let StorageService = function () {
             console.log("initialize");
 
             this.initializeListOfVenues();
+            this.initializeListOfReservations();
         },
 
-        /**
-         *
-         * @param venueId
-         * @returns {*}
-         */
-        getVenueDetails: function (venueId) {
-            let result = this.listOfVenues.filter(obj => {
-                return obj.id === venueId
-            });
-
-            return result[0];
-        },
-
-        /**
-         *
-         * @param maxDistance
-         * @returns {number}
-         */
         getRandomDistance: function (maxDistance) {
             return Math.floor(Math.random() * Math.floor(maxDistance)) + Math.round(Math.random() * 10) / 10;
         },
 
-        /**
-         *
-         * @param min
-         * @param max
-         * @returns {*}
-         */
         getNumberInRange: function (min, max) {
             return Math.round(Math.random() * (max - min) + min);
         },
 
-        listOfVenues: null,
+        listOfVenues: [],
 
         initializeListOfVenues: function () {
             this.listOfVenues = [
@@ -132,6 +109,41 @@ let StorageService = function () {
 
         getListOfVenues: function () {
             return this.listOfVenues;
+        },
+
+        getVenueDetails: function (venueId) {
+            let result = this.listOfVenues.filter(obj => {
+                return obj.id === venueId
+            });
+
+            return result[0];
+        },
+
+        listOfReservations: [],
+
+        initializeListOfReservations: function () {
+            this.listOfReservations = [
+                {
+                    id: 1,
+                    venue: 1,
+                    outsideDining: true,
+                    insideDining: false,
+                    placeInQueue: this.getNumberInRange(5, 20),
+                    estimatedWaitingTime: this.getNumberInRange(5, 30) + " minutes"
+                },
+                {
+                    id: 2,
+                    venue: 4,
+                    outsideDining: false,
+                    insideDining: true,
+                    placeInQueue: this.getNumberInRange(5, 20),
+                    estimatedWaitingTime: this.getNumberInRange(5, 30) + " minutes"
+                },
+            ];
+        },
+
+        getListOfReservations: function () {
+            return this.listOfReservations;
         }
     };
 
